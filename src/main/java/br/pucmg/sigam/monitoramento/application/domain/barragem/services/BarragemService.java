@@ -32,7 +32,7 @@ public class BarragemService {
 
     public BarragemResponseDTO editBarragem(final Long id, final BarragemRequestDTO requestDTO) throws Exception {
         var barragemSolicitada = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com o ID: " + id));
+                .orElseThrow(() -> new RuntimeException("Barragem não encontrada com o ID: " + id));
 
         barragemSolicitada.setNome(requestDTO.getNome());
         barragemSolicitada.setTipo(TipoBarragem.valueOf(requestDTO.getTipo()));
