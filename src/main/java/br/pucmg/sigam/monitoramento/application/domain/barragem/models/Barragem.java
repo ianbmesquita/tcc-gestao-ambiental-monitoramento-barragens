@@ -1,10 +1,13 @@
 package br.pucmg.sigam.monitoramento.application.domain.barragem.models;
 
+import br.pucmg.sigam.monitoramento.application.domain.alerta.models.Alerta;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Table(name = "barragens")
 @Entity(name = "barragens")
@@ -34,4 +37,7 @@ public class Barragem {
 
     @Column
     private StatusBarragem status;
+
+    @OneToMany(mappedBy = "barragem", cascade = CascadeType.ALL)
+    private List<Alerta> alertas;
 }
