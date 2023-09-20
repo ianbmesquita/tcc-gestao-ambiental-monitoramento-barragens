@@ -5,18 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class IncidenteResponseDTO {
+public class SensorResponseDTO {
     private Long id;
-    private LocalDateTime dataHora;
-    private String grauRisco;
+    private String nome;
+    private String fabricante;
     private String tipo;
-    private String origem;
-    private String observacoes;
-    private BarragemResponseDTO barragem;
+    private List<BarragemResponseDTO> barragens;
 }

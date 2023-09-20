@@ -7,6 +7,7 @@ import br.pucmg.sigam.monitoramento.application.domain.incidente.models.TipoInci
 import br.pucmg.sigam.monitoramento.application.domain.barragem.mappers.BarragemMapper;
 import br.pucmg.sigam.monitoramento.application.domain.barragem.models.Barragem;
 import br.pucmg.sigam.monitoramento.application.domain.barragem.models.ClassificacaoRisco;
+import br.pucmg.sigam.monitoramento.application.domain.incidente.models.TipoOrigem;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,9 @@ public class IncidenteMapper {
         return Incidente.builder()
                 .dataHora(requestDTO.getDataHora())
                 .grauRisco(ClassificacaoRisco.valueOf(requestDTO.getGrauRisco()))
-                .tipo(TipoIncidente.valueOf(requestDTO.getAlerta()))
+                .tipoIncidente(TipoIncidente.valueOf(requestDTO.getAlerta()))
+                .origem(TipoOrigem.valueOf(requestDTO.getOrigem()))
+                .observacoes(requestDTO.getObservacoes())
                 .barragem(barragem)
                 .build();
     }
@@ -34,7 +37,7 @@ public class IncidenteMapper {
                 .id(incidente.getId())
                 .dataHora(incidente.getDataHora())
                 .grauRisco(incidente.getGrauRisco().getRisco())
-                .tipo(incidente.getTipo().getTipo())
+                .tipo(incidente.getTipoIncidente().getTipo())
                 .barragem(barragemMapper.convertBarragemEntityToBarragemResponseDTO(incidente.getBarragem()))
                 .build();
     }
