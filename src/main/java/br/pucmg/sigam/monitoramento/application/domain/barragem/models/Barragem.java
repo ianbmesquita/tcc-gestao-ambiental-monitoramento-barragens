@@ -1,6 +1,6 @@
 package br.pucmg.sigam.monitoramento.application.domain.barragem.models;
 
-import br.pucmg.sigam.monitoramento.application.domain.alerta.models.Alerta;
+import br.pucmg.sigam.monitoramento.application.domain.incidente.models.Incidente;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,5 +39,5 @@ public class Barragem {
     private StatusBarragem status;
 
     @OneToMany(mappedBy = "barragem", cascade = CascadeType.ALL)
-    private List<Alerta> alertas;
+    private List<Incidente> incidentes;
 }

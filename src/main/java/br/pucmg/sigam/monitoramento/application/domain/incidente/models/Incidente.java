@@ -1,4 +1,4 @@
-package br.pucmg.sigam.monitoramento.application.domain.alerta.models;
+package br.pucmg.sigam.monitoramento.application.domain.incidente.models;
 
 import br.pucmg.sigam.monitoramento.application.domain.barragem.models.Barragem;
 import br.pucmg.sigam.monitoramento.application.domain.barragem.models.ClassificacaoRisco;
@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Table(name = "alertas")
-@Entity(name = "alertas")
+@Table(name = "incidentes")
+@Entity(name = "incidentes")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Alerta {
+public class Incidente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,7 +25,7 @@ public class Alerta {
 
     private ClassificacaoRisco grauRisco;
 
-    private TipoAlerta tipo;
+    private TipoIncidente tipo;
 
     @ManyToOne
     @JoinColumn(name = "id_barragem")
