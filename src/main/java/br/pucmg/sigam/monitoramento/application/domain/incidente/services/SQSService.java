@@ -17,13 +17,13 @@ public class SQSService {
     private IncidenteMapper mapper;
 
     @Value("${cloud.aws.sqs.queue.url}")
-    private String sqlUrl;
+    private String sqsUrl;
 
     public void sendMessageToQueue(final Incidente incidente) {
         try {
             String message = mapper.convertIncidenteToJsonString(incidente);
 
-            amazonSQSAsync.sendMessage(this.sqlUrl, message);
+            amazonSQSAsync.sendMessage(this.sqsUrl, message);
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Ocorreu erro ao enviar a mensagem para a fila: " + e.getMessage());
         }
