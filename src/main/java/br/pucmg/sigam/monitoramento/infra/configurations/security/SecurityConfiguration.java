@@ -3,6 +3,7 @@ package br.pucmg.sigam.monitoramento.infra.configurations.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -42,6 +43,9 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.GET, "/api/v1/localidade/cep/{cep}").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/habitantes").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/sensores/{id}/leitura").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(authenticationJwtFilter(), UsernamePasswordAuthenticationFilter.class)
