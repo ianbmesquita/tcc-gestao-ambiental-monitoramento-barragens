@@ -21,13 +21,13 @@ public class IncidenteController {
     @Autowired
     private IncidenteService service;
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('OUTSOURCED')")
     @GetMapping
     public ResponseEntity<List<IncidenteResponseDTO>> getAllIncidentes() {
         return ResponseEntity.ok().body(service.getAllIncidentes());
     }
 
-    @PreAuthorize("hasRole('ADMIN', 'OUTSOURCED')")
+    @PreAuthorize("hasRole('OUTSOURCED')")
     @PostMapping
     public ResponseEntity<IncidenteResponseDTO> saveNewIncidente(@RequestBody IncidenteRequestDTO requestDTO) {
         return new ResponseEntity(service.saveNewIncidente(requestDTO), HttpStatus.CREATED);
