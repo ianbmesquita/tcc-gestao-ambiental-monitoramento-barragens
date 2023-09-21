@@ -3,6 +3,7 @@ package br.pucmg.sigam.monitoramento.api.controllers;
 import br.pucmg.sigam.monitoramento.api.dtos.IncidenteRequestDTO;
 import br.pucmg.sigam.monitoramento.api.dtos.IncidenteResponseDTO;
 import br.pucmg.sigam.monitoramento.application.domain.incidente.services.IncidenteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,7 @@ public class IncidenteController {
 
     @PreAuthorize("hasRole('OUTSOURCED')")
     @PostMapping
-    public ResponseEntity<IncidenteResponseDTO> saveNewIncidente(@RequestBody IncidenteRequestDTO requestDTO) {
+    public ResponseEntity<IncidenteResponseDTO> saveNewIncidente(@Valid @RequestBody IncidenteRequestDTO requestDTO) {
         return new ResponseEntity(service.saveNewIncidente(requestDTO), HttpStatus.CREATED);
     }
 }

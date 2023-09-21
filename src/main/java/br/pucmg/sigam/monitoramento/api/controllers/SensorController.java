@@ -4,6 +4,7 @@ import br.pucmg.sigam.monitoramento.api.dtos.LeituraSensorRequestDTO;
 import br.pucmg.sigam.monitoramento.api.dtos.SensorRequestDTO;
 import br.pucmg.sigam.monitoramento.api.dtos.SensorResponseDTO;
 import br.pucmg.sigam.monitoramento.application.domain.sensor.services.SensorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,28 +27,28 @@ public class SensorController {
 
     @PreAuthorize("hasRole('USER')")
     @PostMapping
-    public ResponseEntity<SensorResponseDTO> saveNewSensor(@RequestBody SensorRequestDTO requestDTO) {
+    public ResponseEntity<SensorResponseDTO> saveNewSensor(@Valid @RequestBody SensorRequestDTO requestDTO) {
         return new ResponseEntity(service.saveNewSensor(requestDTO), HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasRole('USER')")
     @PutMapping("/{id}")
     public ResponseEntity<SensorResponseDTO> editSensorById(@PathVariable Long id,
-                                                                @RequestBody SensorRequestDTO requestDTO)
+                                                            @Valid @RequestBody SensorRequestDTO requestDTO)
             throws Exception {
         return ResponseEntity.ok().body(service.editSensor(id, requestDTO));
     }
 
     @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteSensorById(@PathVariable Long id) throws Exception {
+    public ResponseEntity deleteSensorById(@PathVariable Long id) {
         service.deleteSensorById(id);
 
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/{id}/leitura")
-    public ResponseEntity readSensorData(@RequestBody LeituraSensorRequestDTO requestDTO) {
+    public ResponseEntity readSensorData(@Valid @RequestBody LeituraSensorRequestDTO requestDTO) {
         service.readSensorData(requestDTO);
 
         return ResponseEntity.noContent().build();

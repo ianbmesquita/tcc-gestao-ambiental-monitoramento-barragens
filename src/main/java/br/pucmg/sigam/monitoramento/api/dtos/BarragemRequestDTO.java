@@ -7,6 +7,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,10 +16,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BarragemRequestDTO {
+    @NotBlank
     private String nome;
+
+    @NotBlank
     private String tipo;
+
+    @NotBlank
     private String municipio;
+
+    @NotBlank
     private String estado;
+
+    @NotBlank
     private String risco;
+
+    @NotBlank
     private String status;
 }
