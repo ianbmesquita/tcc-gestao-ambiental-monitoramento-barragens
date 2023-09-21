@@ -6,6 +6,7 @@ import br.pucmg.sigam.monitoramento.application.domain.barragem.services.Barrage
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,16 +17,19 @@ public class BarragemController {
     @Autowired
     private BarragemService service;
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ResponseEntity<List<BarragemResponseDTO>> getAllBarragens() {
         return ResponseEntity.ok().body(service.getAllBarragens());
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping
     public ResponseEntity<BarragemResponseDTO> saveNewBarragem(@RequestBody BarragemRequestDTO requestDTO) {
         return new ResponseEntity(service.saveNewBarragem(requestDTO), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PutMapping("/{id}")
     public ResponseEntity<BarragemResponseDTO> editBarragemById(@PathVariable Long id,
                                                                 @RequestBody BarragemRequestDTO requestDTO)
@@ -33,6 +37,7 @@ public class BarragemController {
         return ResponseEntity.ok().body(service.editBarragem(id, requestDTO));
     }
 
+    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/{id}")
     public ResponseEntity deleteBarragemById(@PathVariable Long id) throws Exception {
         service.deleteBarragemById(id);

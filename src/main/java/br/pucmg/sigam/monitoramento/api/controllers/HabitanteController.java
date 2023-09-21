@@ -6,6 +6,7 @@ import br.pucmg.sigam.monitoramento.application.domain.habitante.services.Habita
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,25 +17,29 @@ public class HabitanteController {
     @Autowired
     private HabitanteService service;
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ResponseEntity<List<HabitanteResponseDTO>> getAllHabitantes() {
         return ResponseEntity.ok().body(service.getAllHabitantes());
     }
 
+
     @PostMapping
-    public ResponseEntity<HabitanteResponseDTO> saveNewBarragem(@RequestBody HabitanteRequestDTO requestDTO) {
+    public ResponseEntity<HabitanteResponseDTO> saveNewHabitante(@RequestBody HabitanteRequestDTO requestDTO) {
         return new ResponseEntity(service.saveNewHabitante(requestDTO), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PutMapping("/{id}")
-    public ResponseEntity<HabitanteResponseDTO> editBarragemById(@PathVariable Long id,
+    public ResponseEntity<HabitanteResponseDTO> editHabitanteById(@PathVariable Long id,
                                                                 @RequestBody HabitanteRequestDTO requestDTO)
             throws Exception {
         return ResponseEntity.ok().body(service.editHabitante(id, requestDTO));
     }
 
+    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteBarragemById(@PathVariable Long id) throws Exception {
+    public ResponseEntity deleteHabitanteById(@PathVariable Long id) throws Exception {
         service.deleteHabitanteById(id);
 
         return ResponseEntity.noContent().build();
