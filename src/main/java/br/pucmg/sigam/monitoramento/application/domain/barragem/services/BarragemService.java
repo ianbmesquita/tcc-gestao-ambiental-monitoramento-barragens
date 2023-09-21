@@ -7,10 +7,13 @@ import br.pucmg.sigam.monitoramento.application.domain.barragem.models.Classific
 import br.pucmg.sigam.monitoramento.application.domain.barragem.models.StatusBarragem;
 import br.pucmg.sigam.monitoramento.application.domain.barragem.models.TipoBarragem;
 import br.pucmg.sigam.monitoramento.infra.dataproviders.repositories.BarragemRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static br.pucmg.sigam.monitoramento.utils.Messages.BARRAGEM_NAO_ENCONTRADA;
 
 @Service
 public class BarragemService {
@@ -30,9 +33,9 @@ public class BarragemService {
         return mapper.convertBarragemEntityToBarragemResponseDTO(barragem);
     }
 
-    public BarragemResponseDTO editBarragem(final Long id, final BarragemRequestDTO requestDTO) throws Exception {
+    public BarragemResponseDTO editBarragem(final Long id, final BarragemRequestDTO requestDTO) {
         var barragemSolicitada = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Barragem não encontrada com o ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException(String.format(BARRAGEM_NAO_ENCONTRADA, id)));
 
         barragemSolicitada.setNome(requestDTO.getNome());
         barragemSolicitada.setTipo(TipoBarragem.valueOf(requestDTO.getTipo()));
@@ -46,8 +49,9 @@ public class BarragemService {
         return mapper.convertBarragemEntityToBarragemResponseDTO(barragemAtualizada);
     }
 
-    public void deleteBarragemById(final Long id) throws Exception {
-        var barragem = repository.findById(id).orElseThrow(() -> new Exception());
+    public void deleteBarragemById(final Long id) {
+        var barragem = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format(BARRAGEM_NAO_ENCONTRADA, id)));
 
         repository.delete(barragem);
     }

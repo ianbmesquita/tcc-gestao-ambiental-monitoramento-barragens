@@ -5,10 +5,13 @@ import br.pucmg.sigam.monitoramento.api.dtos.HabitanteResponseDTO;
 import br.pucmg.sigam.monitoramento.application.domain.habitante.mappers.HabitanteMapper;
 import br.pucmg.sigam.monitoramento.infra.dataproviders.repositories.EnderecoRepository;
 import br.pucmg.sigam.monitoramento.infra.dataproviders.repositories.HabitanteRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static br.pucmg.sigam.monitoramento.utils.Messages.HABITANTE_NAO_ENCONTRADO;
 
 @Service
 public class HabitanteService {
@@ -31,9 +34,9 @@ public class HabitanteService {
         return mapper.convertHabitanteEntityToHabitanteResponseDTO(barragem);
     }
 
-    public HabitanteResponseDTO editHabitante(final Long id, final HabitanteRequestDTO requestDTO) throws Exception {
+    public HabitanteResponseDTO editHabitante(final Long id, final HabitanteRequestDTO requestDTO) {
         var habitanteSolicitado = habitanteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Habitante não encontrado com o ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException(String.format(HABITANTE_NAO_ENCONTRADO, id)));
 
         habitanteSolicitado.getEndereco().setCep(requestDTO.getEndereco().getCep());
         habitanteSolicitado.getEndereco().setLogradouro(requestDTO.getEndereco().getLogradouro());
@@ -51,8 +54,9 @@ public class HabitanteService {
         return mapper.convertHabitanteEntityToHabitanteResponseDTO(habitanteAtualizado);
     }
 
-    public void deleteHabitanteById(final Long id) throws Exception {
-        var habitante = habitanteRepository.findById(id).orElseThrow(() -> new Exception());
+    public void deleteHabitanteById(final Long id) {
+        var habitante = habitanteRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format(HABITANTE_NAO_ENCONTRADO, id)));
 
         enderecoRepository.delete(habitante.getEndereco());
 

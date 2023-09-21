@@ -9,10 +9,13 @@ import br.pucmg.sigam.monitoramento.application.domain.sensor.mappers.SensorMapp
 import br.pucmg.sigam.monitoramento.application.domain.sensor.models.TipoSensor;
 import br.pucmg.sigam.monitoramento.infra.dataproviders.repositories.BarragemRepository;
 import br.pucmg.sigam.monitoramento.infra.dataproviders.repositories.SensorRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static br.pucmg.sigam.monitoramento.utils.Messages.SENSOR_NAO_ENCONTRADO;
 
 @Service
 public class SensorService {
@@ -34,16 +37,16 @@ public class SensorService {
 
     public SensorResponseDTO saveNewSensor(final SensorRequestDTO requestDTO) {
         var barragem = barragemRepository.findById(requestDTO.getIdBarragem())
-                .orElseThrow(() -> new RuntimeException("Barragem não encontrada com o ID: " + requestDTO.getIdBarragem()));
+                .orElseThrow(() -> new EntityNotFoundException(String.format(SENSOR_NAO_ENCONTRADO, requestDTO.getIdBarragem())));
 
         var sensor = sensorRepository.save(mapper.convertSensorRequestDTOToSensorEntity(requestDTO, barragem));
 
         return mapper.convertSensorEntityToSensorResponseDTO(sensor);
     }
 
-    public SensorResponseDTO editSensor(final Long id, final SensorRequestDTO requestDTO) throws Exception {
+    public SensorResponseDTO editSensor(final Long id, final SensorRequestDTO requestDTO) {
         var sensor = sensorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Sensor não encontrado com o ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException(String.format(SENSOR_NAO_ENCONTRADO, id)));
 
         sensor.setNome(requestDTO.getNome());
         sensor.setFabricante(requestDTO.getFabricante());
@@ -54,8 +57,9 @@ public class SensorService {
         return mapper.convertSensorEntityToSensorResponseDTO(sensorAtualizado);
     }
 
-    public void deleteSensorById(final Long id) throws Exception {
-        var sensor = sensorRepository.findById(id).orElseThrow(() -> new Exception());
+    public void deleteSensorById(final Long id) {
+        var sensor = sensorRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format(SENSOR_NAO_ENCONTRADO, id)));
 
         sensorRepository.delete(sensor);
     }
