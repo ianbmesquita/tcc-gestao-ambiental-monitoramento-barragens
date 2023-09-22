@@ -15,15 +15,12 @@ phases:
       - mvn clean install -DskipTests=true
   post_build:
     commands:
-      - echo "Deploying to Elastic Beanstalk..."
-      - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-      - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-      - eb init -r $AWS_REGION -p "java" $BEANSTALK_APP_NAME
-      - eb use $BEANSTALK_ENV_NAME
-      - eb deploy
+      - mv target/moitoramento-0.0.1-SNAPSHOT.jar moitoramento-0.0.1-SNAPSHOT.jar
 
 artifacts:
-  files: target/*
+  files:
+    - moitoramento-0.0.1-SNAPSHOT.jar
+    - .ebextensions/*
 
 cache:
   paths:
