@@ -11,7 +11,7 @@ public class RabbitMQService {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    public void sendMessage(final Object message) {
+    public void sendMessage(final String message) {
         rabbitTemplate.convertAndSend(ROUTING_KEY_QUEUE, message);
     }
 }

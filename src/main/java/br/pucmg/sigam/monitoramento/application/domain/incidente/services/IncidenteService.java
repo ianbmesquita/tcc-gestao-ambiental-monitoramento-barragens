@@ -6,6 +6,7 @@ import br.pucmg.sigam.monitoramento.application.domain.barragem.models.Classific
 import br.pucmg.sigam.monitoramento.application.domain.incidente.mappers.IncidenteMapper;
 import br.pucmg.sigam.monitoramento.infra.dataproviders.repositories.BarragemRepository;
 import br.pucmg.sigam.monitoramento.infra.dataproviders.repositories.IncidenteRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.amqp.AmqpException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class IncidenteService {
             }
 
             return mapper.convertIncidenteEntityToIncidenteResponseDTO(incidente);
-        } catch (AmqpException exception) {
+        } catch (AmqpException | JsonProcessingException exception) {
             throw new AmqpException("Erro ao enviar a mensagem para o tópico: ", exception.getCause());
         }
     }

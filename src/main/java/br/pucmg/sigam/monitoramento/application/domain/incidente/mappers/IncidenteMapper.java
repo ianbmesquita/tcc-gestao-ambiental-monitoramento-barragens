@@ -9,6 +9,8 @@ import br.pucmg.sigam.monitoramento.application.domain.incidente.models.Incident
 import br.pucmg.sigam.monitoramento.application.domain.incidente.models.MensagemIncidente;
 import br.pucmg.sigam.monitoramento.application.domain.incidente.models.TipoIncidente;
 import br.pucmg.sigam.monitoramento.application.domain.incidente.models.TipoOrigem;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +21,9 @@ import java.util.List;
 public class IncidenteMapper {
     @Autowired
     private BarragemMapper barragemMapper;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     public Incidente convertIncidenteRequestDTOToIncidenteEntity(final IncidenteRequestDTO requestDTO, final Barragem barragem) {
         return Incidente.builder()
@@ -52,13 +57,14 @@ public class IncidenteMapper {
         return alertasResponseDTO;
     }
 
-    public MensagemIncidente convertIncidenteToMensagemIncidente(final Incidente incidente) {
-        return MensagemIncidente.builder()
+    public String convertIncidenteToMensagemIncidente(final Incidente incidente) throws JsonProcessingException {
+        return this.objectMapper.writeValueAsString(
+                MensagemIncidente.builder()
                 .dataHora(incidente.getDataHora())
                 .grauRisco(incidente.getGrauRisco())
                 .tipoIncidente(incidente.getTipoIncidente())
                 .origem(incidente.getOrigem())
                 .observacoes(incidente.getObservacoes())
-                .build();
+                .build());
     }
 }
