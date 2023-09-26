@@ -9,15 +9,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Table(name = "enderecos")
-@Entity(name = "enderecos")
+@Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Endereco {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotNull
     @Column
@@ -42,9 +42,4 @@ public class Endereco {
     @NotNull
     @Column
     private String estado;
-
-    @OneToOne
-    @JoinColumn(name = "id_habitante", referencedColumnName = "id")
-    private Habitante habitante;
-
 }

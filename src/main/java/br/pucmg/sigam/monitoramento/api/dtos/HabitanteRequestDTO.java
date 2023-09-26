@@ -9,7 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
-import static org.springframework.format.annotation.DateTimeFormat.ISO.*;
+import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
 
 @Data
 @NoArgsConstructor
@@ -18,7 +18,7 @@ public class HabitanteRequestDTO {
     @NotBlank
     private String nome;
 
-    @NotBlank
+    @NotNull
     @PastOrPresent
     @DateTimeFormat(iso = DATE)
     private LocalDate nascimento;

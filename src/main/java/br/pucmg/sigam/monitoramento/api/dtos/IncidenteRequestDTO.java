@@ -13,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
+import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME;
 
 @Data
 @Builder
@@ -25,7 +26,7 @@ public class IncidenteRequestDTO {
 
     @NotNull
     @PastOrPresent
-    @DateTimeFormat(iso = DATE)
+    @DateTimeFormat(iso = DATE_TIME)
     private LocalDateTime dataHora;
 
     @NotBlank

@@ -3,7 +3,6 @@ package br.pucmg.sigam.monitoramento.application.domain.habitante.services;
 import br.pucmg.sigam.monitoramento.api.dtos.HabitanteRequestDTO;
 import br.pucmg.sigam.monitoramento.api.dtos.HabitanteResponseDTO;
 import br.pucmg.sigam.monitoramento.application.domain.habitante.mappers.HabitanteMapper;
-import br.pucmg.sigam.monitoramento.infra.dataproviders.repositories.EnderecoRepository;
 import br.pucmg.sigam.monitoramento.infra.dataproviders.repositories.HabitanteRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +16,6 @@ import static br.pucmg.sigam.monitoramento.utils.Messages.HABITANTE_NAO_ENCONTRA
 public class HabitanteService {
     @Autowired
     private HabitanteRepository habitanteRepository;
-
-    @Autowired
-    private EnderecoRepository enderecoRepository;
 
     @Autowired
     private HabitanteMapper mapper;
@@ -57,8 +53,6 @@ public class HabitanteService {
     public void deleteHabitanteById(final Long id) {
         var habitante = habitanteRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format(HABITANTE_NAO_ENCONTRADO, id)));
-
-        enderecoRepository.delete(habitante.getEndereco());
 
         habitanteRepository.delete(habitante);
     }

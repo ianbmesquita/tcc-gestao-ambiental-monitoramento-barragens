@@ -1,8 +1,8 @@
 package br.pucmg.sigam.monitoramento.api.dtos;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,7 +23,7 @@ public class EnderecoRequestDTO {
     @NotBlank
     private String logradouro;
 
-    @NotBlank
+    @NotNull
     private Integer numero;
 
     private String complemento;

@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
+import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME;
 
 @Data
 @NoArgsConstructor
@@ -19,15 +20,11 @@ import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
 public class LeituraSensorRequestDTO {
     @NotNull
     @Positive
-    private Long idSensor;
-
-    @NotNull
-    @Positive
     private Long idBarragem;
 
     @NotNull
     @PastOrPresent
-    @DateTimeFormat(iso = DATE)
+    @DateTimeFormat(iso = DATE_TIME)
     private LocalDateTime dataHora;
 
     @NotNull

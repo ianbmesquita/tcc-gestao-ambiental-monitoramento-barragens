@@ -1,5 +1,6 @@
 package br.pucmg.sigam.monitoramento.api.dtos;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class IncidenteResponseDTO {
     private Long id;
     private LocalDateTime dataHora;

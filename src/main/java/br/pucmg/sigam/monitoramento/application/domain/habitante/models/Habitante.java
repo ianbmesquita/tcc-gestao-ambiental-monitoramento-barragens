@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Table(name = "habitantes")
-@Entity(name = "habitantes")
+@Entity
 @Data
 @Builder
 @NoArgsConstructor
@@ -37,6 +37,7 @@ public class Habitante {
     @Column
     private String email;
 
-    @OneToOne(mappedBy = "habitante", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="id_endereco", referencedColumnName = "id", nullable = false)
     private Endereco endereco;
 }
