@@ -64,9 +64,9 @@ public class SensorService {
         sensorRepository.delete(sensor);
     }
 
-    public void readSensorData(final LeituraSensorRequestDTO requestDTO) {
-        if (requestDTO.getGrauRisco().equals(ClassificacaoRisco.ALTO.getRisco())) {
-            incidenteService.saveNewIncidente(mapper.convertLeituraSensorRequestDTOToIncidenteRequestDTO(requestDTO));
+    public void readSensorData(final LeituraSensorRequestDTO requestDTO, final Long id) {
+        if (ClassificacaoRisco.valueOf(requestDTO.getGrauRisco()).equals(ClassificacaoRisco.ALTO)) {
+            incidenteService.saveNewIncidente(mapper.convertLeituraSensorRequestDTOToIncidenteRequestDTO(requestDTO, id));
         }
     }
 }

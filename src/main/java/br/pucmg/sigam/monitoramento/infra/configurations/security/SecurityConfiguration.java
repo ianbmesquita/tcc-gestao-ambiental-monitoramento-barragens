@@ -43,9 +43,9 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.POST, "/api/v1/sensores/{id}/leitura").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/localidade/cep/{cep}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/habitantes").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/sensores/{id}/leitura").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(authenticationJwtFilter(), UsernamePasswordAuthenticationFilter.class)

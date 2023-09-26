@@ -32,6 +32,7 @@ public class SensorMapper {
 
     public SensorResponseDTO convertSensorEntityToSensorResponseDTO(final Sensor sensor) {
         return SensorResponseDTO.builder()
+                .id(sensor.getId())
                 .nome(sensor.getNome())
                 .fabricante(sensor.getFabricante())
                 .tipo(sensor.getTipo().getTipo())
@@ -49,14 +50,15 @@ public class SensorMapper {
         return sensoresResponseDTO;
     }
 
-    public IncidenteRequestDTO convertLeituraSensorRequestDTOToIncidenteRequestDTO(final LeituraSensorRequestDTO requestDTO) {
+    public IncidenteRequestDTO convertLeituraSensorRequestDTOToIncidenteRequestDTO(final LeituraSensorRequestDTO requestDTO,
+                                                                                   final Long id) {
         return IncidenteRequestDTO.builder()
                 .idBarragem(requestDTO.getIdBarragem())
                 .dataHora(requestDTO.getDataHora())
                 .grauRisco(requestDTO.getGrauRisco())
                 .alerta(requestDTO.getAlerta())
-                .origem(TipoOrigem.SENSOR.getTipo())
-                .observacoes("Leitura aferida pelo sensor de id: " + requestDTO.getIdSensor())
+                .origem(TipoOrigem.SENSOR.toString())
+                .observacoes("Leitura aferida pelo sensor de id: " + id)
                 .build();
     }
 }

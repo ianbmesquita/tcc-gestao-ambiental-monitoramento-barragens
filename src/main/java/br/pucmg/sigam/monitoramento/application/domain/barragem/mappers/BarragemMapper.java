@@ -26,6 +26,7 @@ public class BarragemMapper {
 
     public BarragemResponseDTO convertBarragemEntityToBarragemResponseDTO(final Barragem barragem) {
         return BarragemResponseDTO.builder()
+                .id(barragem.getId())
                 .nome(barragem.getNome())
                 .tipo(barragem.getTipo().getTipo())
                 .municipio(barragem.getMunicipio())

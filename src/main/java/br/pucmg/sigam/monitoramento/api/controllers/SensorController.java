@@ -48,8 +48,8 @@ public class SensorController {
     }
 
     @PostMapping("/{id}/leitura")
-    public ResponseEntity readSensorData(@Valid @RequestBody LeituraSensorRequestDTO requestDTO) {
-        service.readSensorData(requestDTO);
+    public ResponseEntity readSensorData(@PathVariable Long id, @Valid @RequestBody LeituraSensorRequestDTO requestDTO) {
+        service.readSensorData(requestDTO, id);
 
         return ResponseEntity.noContent().build();
     }
