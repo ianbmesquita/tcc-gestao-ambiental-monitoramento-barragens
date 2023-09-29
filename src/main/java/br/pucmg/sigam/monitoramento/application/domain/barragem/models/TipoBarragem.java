@@ -6,9 +6,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum TipoBarragem {
-    CONCRETO("concreto"),
-    ENROCAMENTO("enrocamento"),
-    ATERRO("aterro");
+    CONCRETO("Concreto"),
+    ENROCAMENTO("Enrocamento"),
+    ATERRO("Aterro");
 
     private String tipo;
 }

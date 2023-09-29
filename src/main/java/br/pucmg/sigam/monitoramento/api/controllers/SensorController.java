@@ -1,6 +1,7 @@
 package br.pucmg.sigam.monitoramento.api.controllers;
 
 import br.pucmg.sigam.monitoramento.api.dtos.LeituraSensorRequestDTO;
+import br.pucmg.sigam.monitoramento.api.dtos.SensorInfoResponseDTO;
 import br.pucmg.sigam.monitoramento.api.dtos.SensorRequestDTO;
 import br.pucmg.sigam.monitoramento.api.dtos.SensorResponseDTO;
 import br.pucmg.sigam.monitoramento.application.domain.sensor.services.SensorService;
@@ -20,9 +21,21 @@ public class SensorController {
     private SensorService service;
 
     @PreAuthorize("hasRole('USER')")
+    @GetMapping("/info")
+    public ResponseEntity<SensorInfoResponseDTO> getaAllSensorDataScreen() {
+        return ResponseEntity.ok().body(service.getaAllSensorDataScreen());
+    }
+
+    @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ResponseEntity<List<SensorResponseDTO>> getAllSensores() {
         return ResponseEntity.ok().body(service.getAllSensores());
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/{id}")
+    public ResponseEntity<SensorResponseDTO> getSensorById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(service.getSensorById(id));
     }
 
     @PreAuthorize("hasRole('USER')")

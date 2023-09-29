@@ -6,9 +6,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum StatusBarragem {
-    NORMAL("normal"),
-    ATENCAO("atenção"),
-    CRITICO("critico");
+    NORMAL("Normal"),
+    ATENCAO("Atenção"),
+    CRITICO("Critico");
 
     private String status;
 }

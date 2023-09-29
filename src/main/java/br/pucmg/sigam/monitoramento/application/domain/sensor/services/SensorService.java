@@ -1,6 +1,7 @@
 package br.pucmg.sigam.monitoramento.application.domain.sensor.services;
 
 import br.pucmg.sigam.monitoramento.api.dtos.LeituraSensorRequestDTO;
+import br.pucmg.sigam.monitoramento.api.dtos.SensorInfoResponseDTO;
 import br.pucmg.sigam.monitoramento.api.dtos.SensorRequestDTO;
 import br.pucmg.sigam.monitoramento.api.dtos.SensorResponseDTO;
 import br.pucmg.sigam.monitoramento.application.domain.barragem.models.ClassificacaoRisco;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static br.pucmg.sigam.monitoramento.utils.Messages.BARRAGEM_NAO_ENCONTRADA;
 import static br.pucmg.sigam.monitoramento.utils.Messages.SENSOR_NAO_ENCONTRADO;
 
 @Service
@@ -31,8 +33,20 @@ public class SensorService {
     @Autowired
     private IncidenteService incidenteService;
 
+    public SensorInfoResponseDTO getaAllSensorDataScreen() {
+        var barragens = barragemRepository.findAll();
+        return mapper.convertDataToSensorInfoResponseDTO(barragens);
+    }
+
     public List<SensorResponseDTO> getAllSensores() {
         return mapper.convertListSensorEntityToListSensorResponseDTO(sensorRepository.findAll());
+    }
+
+    public SensorResponseDTO getSensorById(final Long id) {
+        var sensor = sensorRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format(SENSOR_NAO_ENCONTRADO, id)));
+
+        return mapper.convertSensorEntityToSensorResponseDTO(sensor);
     }
 
     public SensorResponseDTO saveNewSensor(final SensorRequestDTO requestDTO) {
