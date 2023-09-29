@@ -2,6 +2,7 @@ package br.pucmg.sigam.monitoramento.api.controllers;
 
 import br.pucmg.sigam.monitoramento.api.dtos.BarragemRequestDTO;
 import br.pucmg.sigam.monitoramento.api.dtos.BarragemResponseDTO;
+import br.pucmg.sigam.monitoramento.api.dtos.HabitanteEmailResponseDTO;
 import br.pucmg.sigam.monitoramento.application.domain.barragem.services.BarragemService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,14 @@ public class BarragemController {
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping
-    public ResponseEntity<List<BarragemResponseDTO>> getAllBarragens() {
-        return ResponseEntity.ok().body(service.getAllBarragens());
+    public ResponseEntity<List<BarragemResponseDTO>> getAllBarragens(@ModelAttribute BarragemRequestDTO requestDTO) {
+        return ResponseEntity.ok().body(service.getAllBarragens(requestDTO));
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/{id}")
+    public ResponseEntity<BarragemResponseDTO> getBarragensById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(service.getBarragensById(id));
     }
 
     @PreAuthorize("hasRole('USER')")
@@ -44,5 +51,10 @@ public class BarragemController {
         service.deleteBarragemById(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/habitantes")
+    public ResponseEntity<List<HabitanteEmailResponseDTO>> getAllHabitantesByBarragemId(@PathVariable Long id) {
+        return ResponseEntity.ok().body(service.getAllHabitantesByBarragemId(id));
     }
 }

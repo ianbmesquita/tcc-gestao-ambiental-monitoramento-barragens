@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -41,11 +42,16 @@ public class SecurityConfiguration {
     protected SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
+                .cors(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/api/v1/sensores/{id}/leitura").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/barragens/{id}/habitantes").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/localidade/cep/{cep}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/localidade/estados").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/localidade/estados/{id}/municipios").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/sensores/{id}/leitura").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/habitantes").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/habitantes/info").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(authenticationJwtFilter(), UsernamePasswordAuthenticationFilter.class)

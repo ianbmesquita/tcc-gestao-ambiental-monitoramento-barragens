@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Table(name = "barragens")
-@Entity(name = "barragens")
+@Entity
 @Data
 @Builder
 @NoArgsConstructor
@@ -38,6 +38,12 @@ public class Barragem {
 
     @Column
     private StatusBarragem status;
+
+    @Column
+    private Long latitude;
+
+    @Column
+    private Long longitude;
 
     @OneToMany(mappedBy = "barragem", cascade = CascadeType.ALL)
     private List<Incidente> incidentes;

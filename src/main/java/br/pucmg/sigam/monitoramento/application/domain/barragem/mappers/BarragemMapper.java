@@ -2,6 +2,7 @@ package br.pucmg.sigam.monitoramento.application.domain.barragem.mappers;
 
 import br.pucmg.sigam.monitoramento.api.dtos.BarragemRequestDTO;
 import br.pucmg.sigam.monitoramento.api.dtos.BarragemResponseDTO;
+import br.pucmg.sigam.monitoramento.application.domain.barragem.filters.BarragemFilter;
 import br.pucmg.sigam.monitoramento.application.domain.barragem.models.Barragem;
 import br.pucmg.sigam.monitoramento.application.domain.barragem.models.ClassificacaoRisco;
 import br.pucmg.sigam.monitoramento.application.domain.barragem.models.StatusBarragem;
@@ -21,6 +22,8 @@ public class BarragemMapper {
                 .estado(requestDTO.getEstado())
                 .risco(ClassificacaoRisco.valueOf(requestDTO.getRisco()))
                 .status(StatusBarragem.valueOf(requestDTO.getStatus()))
+                .latitude(requestDTO.getLatitude())
+                .longitude(requestDTO.getLongitude())
                 .build();
     }
 
@@ -33,6 +36,8 @@ public class BarragemMapper {
                 .estado(barragem.getEstado())
                 .risco(barragem.getRisco().getRisco())
                 .status(barragem.getStatus().getStatus())
+                .latitude(barragem.getLatitude())
+                .longitude(barragem.getLongitude())
                 .build();
     }
 
@@ -44,5 +49,16 @@ public class BarragemMapper {
         }
 
         return barragensResponseDTO;
+    }
+
+    public BarragemFilter convertBarragemRequestDTOToBarragemFilter(final BarragemRequestDTO requestDTO) {
+        return BarragemFilter.builder()
+                .nome(requestDTO.getNome())
+                .tipo(requestDTO.getTipo() != null ? TipoBarragem.valueOf(requestDTO.getTipo()) : null)
+                .municipio(requestDTO.getMunicipio())
+                .estado(requestDTO.getEstado())
+                .risco(requestDTO.getRisco() != null ? ClassificacaoRisco.valueOf(requestDTO.getRisco()) : null)
+                .status(requestDTO.getStatus() != null ? StatusBarragem.valueOf(requestDTO.getStatus()) : null)
+                .build();
     }
 }

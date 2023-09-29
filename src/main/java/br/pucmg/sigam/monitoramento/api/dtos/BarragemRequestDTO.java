@@ -9,10 +9,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class BarragemRequestDTO {
@@ -33,4 +35,8 @@ public class BarragemRequestDTO {
 
     @NotBlank
     private String status;
+
+    private Long latitude;
+
+    private Long longitude;
 }

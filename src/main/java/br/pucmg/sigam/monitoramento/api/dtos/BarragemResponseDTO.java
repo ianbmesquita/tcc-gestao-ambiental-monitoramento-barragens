@@ -17,4 +17,6 @@ public class BarragemResponseDTO {
     private String estado;
     private String risco;
     private String status;
+    private Long latitude;
+    private Long longitude;
 }
