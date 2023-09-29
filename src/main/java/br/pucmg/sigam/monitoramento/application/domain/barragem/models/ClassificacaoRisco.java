@@ -6,9 +6,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ClassificacaoRisco {
-    BAIXO("baixo"),
-    MEDIO("médio"),
-    ALTO("alto");
+    BAIXO("Baixo"),
+    MEDIO("Médio"),
+    ALTO("Alto");
 
     private String risco;
 }

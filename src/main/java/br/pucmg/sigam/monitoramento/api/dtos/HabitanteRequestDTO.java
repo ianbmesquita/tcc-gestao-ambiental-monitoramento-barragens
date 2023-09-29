@@ -33,6 +33,9 @@ public class HabitanteRequestDTO {
     private String email;
 
     @NotNull
+    private Long idBarragem;
+
+    @NotNull
     @Valid
     private EnderecoRequestDTO endereco;
 }

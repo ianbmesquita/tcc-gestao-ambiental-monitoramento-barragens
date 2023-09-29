@@ -11,12 +11,6 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class HabitanteResponseDTO {
-    private Long id;
-    private String nome;
-    private LocalDate nascimento;
-    private String telefone;
+public class HabitanteEmailResponseDTO {
     private String email;
-    private String barragem_proxima;
-    private EnderecoResponseDTO endereco;
 }

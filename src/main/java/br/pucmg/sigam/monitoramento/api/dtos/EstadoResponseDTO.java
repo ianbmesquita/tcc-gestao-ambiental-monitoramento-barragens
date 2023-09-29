@@ -1,22 +1,18 @@
 package br.pucmg.sigam.monitoramento.api.dtos;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class HabitanteResponseDTO {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class EstadoResponseDTO {
     private Long id;
+    private String sigla;
     private String nome;
-    private LocalDate nascimento;
-    private String telefone;
-    private String email;
-    private String barragem_proxima;
-    private EnderecoResponseDTO endereco;
 }

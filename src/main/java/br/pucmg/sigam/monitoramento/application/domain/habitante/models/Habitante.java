@@ -1,5 +1,6 @@
 package br.pucmg.sigam.monitoramento.application.domain.habitante.models;
 
+import br.pucmg.sigam.monitoramento.application.domain.barragem.models.Barragem;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -40,4 +41,9 @@ public class Habitante {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id_endereco", referencedColumnName = "id", nullable = false)
     private Endereco endereco;
+
+    @ManyToOne
+    @JoinColumn(name = "id_barragem", referencedColumnName = "id")
+    private Barragem barragem;
+
 }

@@ -60,11 +60,13 @@ public class IncidenteMapper {
     public String convertIncidenteToMensagemIncidente(final Incidente incidente) throws JsonProcessingException {
         return this.objectMapper.writeValueAsString(
                 MensagemIncidente.builder()
-                .dataHora(incidente.getDataHora())
-                .grauRisco(incidente.getGrauRisco())
-                .tipoIncidente(incidente.getTipoIncidente())
-                .origem(incidente.getOrigem())
+                .dataHora(incidente.getDataHora().toString())
+                .grauRisco(incidente.getGrauRisco().getRisco())
+                .tipoIncidente(incidente.getTipoIncidente().getTipo())
+                .origem(incidente.getOrigem().getTipo())
                 .observacoes(incidente.getObservacoes())
+                .idBarragem(incidente.getBarragem().getId().toString())
+                .nomeBarragem(incidente.getBarragem().getNome())
                 .build());
     }
 }
